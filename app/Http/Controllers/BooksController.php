@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BooksRequest;
 use App\Models\Books;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class BooksController extends Controller
 {
@@ -33,9 +35,17 @@ class BooksController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BooksRequest $request)
     {
-        //
+        $token = $request->bearerToken();
+
+
+        $data = $request->validated();
+        $img = ImageController::toImage($data['cover_image']);
+        dd($data['cover_image']);
+
+
+        dd($request->validated());
     }
 
     /**
