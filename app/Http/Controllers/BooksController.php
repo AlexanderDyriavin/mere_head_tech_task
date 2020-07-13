@@ -20,7 +20,7 @@ class BooksController extends Controller
     public function index()
     {
 //        dd(Authors::with('books')->get());
-        $books = Authors::with('books')->get();
+        $books = Books::all();
         return response([
             'status' => 'Successfully received',
             'books' => $books], 200);
@@ -63,12 +63,21 @@ class BooksController extends Controller
     {
         //
     }
-    public function showByAuthor(Request $request,Books $book)
+
+    public function showByAuthor(Request $request, Books $book)
     {
-        $data = Books::all()->where('authors_id','=',$request->authors_id);
+        $data = Books::all()->where('authors_id', '=', $request->authors_id);
         return response(['message' => 'received',
             'books' => $data], 200);
     }
+
+    public function showByUser(Request $request)
+    {
+        $data = Books::all()->where('user_id', '=', auth()->id());
+        return response(['messages' => 'received',
+            'books created by you' => $data]);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -89,7 +98,9 @@ class BooksController extends Controller
      */
     public function update(Request $request, Books $book)
     {
-        //
+        $book->update($request->input());
+        return response(['message' => 'book was updated',
+            'book' => $book]);
     }
 
     /**
@@ -100,6 +111,7 @@ class BooksController extends Controller
      */
     public function destroy(Books $book)
     {
-        //
+        $book->delete();
+        return response(['message' => 'Book was deleted']);
     }
 }

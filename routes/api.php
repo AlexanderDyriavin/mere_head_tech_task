@@ -18,5 +18,6 @@ Route::middleware('api')->group(function () {
 //});
 Route::middleware('auth.jwt:api')->group(function () {
     Route::get('books-by-author','BooksController@showByAuthor');
+    Route::post('books-by-me','BooksController@showByUser');
     Route::resource('books', 'BooksController');
 });
