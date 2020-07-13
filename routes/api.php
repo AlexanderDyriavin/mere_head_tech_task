@@ -9,15 +9,12 @@ Route::group([
     Route::post('register', 'UserController@register');
     Route::post('login', 'UserController@login');
     Route::get('authors-all','AuthorsController@index');
-});
-Route::middleware('api')->group(function () {
-    Route::resource('books', 'BooksController');
-});
-//Route::group(['middleware' => 'auth.jwt'], function () {
-//    Route::resource('books', 'BooksController');
-//});
-Route::middleware('auth.jwt:api')->group(function () {
+    Route::get('books','BooksController@index');
     Route::get('books-by-author','BooksController@showByAuthor');
+});
+Route::middleware('auth.jwt:api')->group(function () {
     Route::post('books-by-me','BooksController@showByUser');
-    Route::resource('books', 'BooksController');
+    Route::post('books', 'BooksController@store');
+    Route::match(['put','patch'],'books/{book}' ,'BooksController@update');
+    Route::delete('books/{book}', 'BooksController@destroy');
 });
