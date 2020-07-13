@@ -29,7 +29,7 @@ class BooksRequest extends FormRequest
             'pages_count' => 'required|int',
             'annotation' => 'required|string',
             'cover_image' => 'required|string',
-            'author_id' => 'required|int'
+            'authors_id' => 'required|int'
         ];
     }
 }

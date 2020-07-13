@@ -19,8 +19,8 @@ class CreateBooksTable extends Migration
             $table->integer('pages_count');
             $table->string('annotation');
             $table->string('cover_image')->nullable();
-            $table->foreignId('author_id')->nullable()->unsigned();
-            $table->foreignId('user_id')->unsigned()->references('id')->on('users');
+            $table->foreignId('authors_id')->nullable()->unsigned();
+            $table->foreignId('user_id')->unsigned()->nullable()->references('id')->on('users');
             $table->timestamps();
         });
     }

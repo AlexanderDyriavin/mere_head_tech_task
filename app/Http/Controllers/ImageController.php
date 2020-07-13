@@ -5,23 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use DateTime;
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
-    public static function toImage(string $img) : string
+    public static function toImage(string $img)
     {
-        //fileName
-        $fileName = str_replace(' ','_',date('Y-m-d H:i'));
-        dd(auth()->id());
-        $image = explode(',',$img);
-        $mimeImage = getimagesizefromstring(base64_decode($image[1]));
-        dd($mimeImage);
-//        dd(explode(',',$img));
-        $date = new DateTime();
-        dd(str_replace(' ','_',date('Y-m-d H:i')));
-        dd(User::find(auth()->id)->name);
-        $image = base64_decode($image[1]);
-//        dd($image);
+        $dataImg = explode(',', $img);
+        $file = base64_decode($dataImg[1]);
+        $mimeImage = getimagesizefromstring(base64_decode($dataImg[1]));
+        $imageName = time() . '.' . str_replace("image/", "", $mimeImage['mime']);
+        Storage::disk('local')->put($imageName,$file);
+        return $imageName;
     }
 }

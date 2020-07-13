@@ -13,9 +13,10 @@ Route::group([
 Route::middleware('api')->group(function () {
     Route::resource('books', 'BooksController');
 });
-Route::group(['middleware' => 'auth.jwt'], function () {
-    Route::resource('books', 'BooksController');
-});
+//Route::group(['middleware' => 'auth.jwt'], function () {
+//    Route::resource('books', 'BooksController');
+//});
 Route::middleware('auth.jwt:api')->group(function () {
+    Route::get('books-by-author','BooksController@showByAuthor');
     Route::resource('books', 'BooksController');
 });

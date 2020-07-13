@@ -18,6 +18,10 @@ class CreateAuthorsTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
         });
+        Schema::create('author_books',function (Blueprint $table){
+           $table->integer('authors_id');
+           $table->integer('books_id');
+        });
     }
 
     /**
