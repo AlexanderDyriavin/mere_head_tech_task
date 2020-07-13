@@ -19,7 +19,6 @@ class BooksController extends Controller
      */
     public function index()
     {
-//        dd(Authors::with('books')->get());
         $books = Books::all();
         return response([
             'status' => 'Successfully received',
